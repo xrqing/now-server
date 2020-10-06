@@ -7,7 +7,6 @@ import com.admin.modules.admin.vo.SysAdminVo;
 import com.admin.security.domain.AdminDetails;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.entity.pojo.SysAdmin;
-import org.springframework.data.repository.query.Param;
 
 /**
  * @Description: 管理员 service
