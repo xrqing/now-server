@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.modules.admin.mapper.SysAdminMapper">
+    <!--根据用户名分页查询管理员-->
+    <select id="getPageList" resultType="com.admin.modules.admin.vo.SysAdminVo">
+        SELECT
+            sa.id AS id,
+            sa.username AS username,
+            sa.icon AS icon,
+            sa.nick_name AS nickName,
+            sa.email AS email,
+            sa.STATUS AS STATUS,
+            sa.create_time AS createTime,
+            sa.login_time AS loginTime,
+            sa.telephone AS telephone,
+            sa.note AS note,
+            ifnull(
+            (
+            SELECT
+                name
+            FROM
+                sys_role sr
+            WHERE
+                sr.id IN ( SELECT sarr.role_id FROM sys_admin_role_relation sarr WHERE sa.id = sarr.admin_id )
+                ),
+                '暂未分配角色'
+            ) AS roleName
+        FROM
+            sys_admin sa
+        WHERE
+            1 = 1
+        <if test="username != null and username != ''">
+        AND sa.username like concat('%', #{username}, '%')
+        </if>
+        ORDER BY
+            sa.create_time DESC
+    </select>
+
+    <!--根据id查询管理员信息-->
+    <select id="getDetail" resultType="com.admin.modules.admin.vo.SysAdminDetailVo">
+        SELECT
+            sa.id AS id,
+            sa.username AS username,
+            sa.icon AS icon,
+            sa.nick_name AS nickName,
+            sa.email AS email,
+            sa.STATUS AS STATUS,
+            sa.create_time AS createTime,
+            sa.login_time AS loginTime,
+            sa.telephone AS telephone,
+            sa.note AS note,
+            ifnull(
+            (
+            SELECT
+                id
+            FROM
+                sys_role sr
+            WHERE
+                sr.id IN ( SELECT sarr.role_id FROM sys_admin_role_relation sarr WHERE sa.id = sarr.admin_id )
+            ),
+            '0'
+            ) AS roleId
+        FROM
+            sys_admin sa
+        WHERE
+            sa.id = #{id}
+    </select>
+</mapper>

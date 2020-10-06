@@ -1,37 +1,26 @@
-package com.entity.pojo;
+package com.admin.modules.admin.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
 /**
- * 系统管理员 sys_admin
+ * @Description: 管理员详情对象 vo
+ * @auther: xrq
+ * @date: 2020/10/6 16:10
  */
 @Data
-@TableName("sys_admin")
-public class SysAdmin {
+public class SysAdminDetailVo {
 
     /**
-     * 主键 id
+     * id
      */
-    @Id
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
      * 管理员名称
      */
     private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
 
     /**
      * 手机号
@@ -51,7 +40,6 @@ public class SysAdmin {
     /**
      * 昵称
      */
-    @TableField("nick_name")
     private String nickName;
 
     /**
@@ -62,17 +50,20 @@ public class SysAdmin {
     /**
      * 创建时间
      */
-    @TableField("create_time")
     private Date createTime;
 
     /**
      * 最后登陆时间
      */
-    @TableField("login_time")
     private Date loginTime;
 
     /**
      * 帐号启用状态：0->禁用；1->启用
      */
     private Integer status;
+
+    /**
+     * 角色id
+     */
+    private Integer roleId;
 }
