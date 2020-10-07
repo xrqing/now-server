@@ -51,4 +51,14 @@ public class AdminConstants {
      * 修改状态失败
      */
     public static final String STATUS_IS_UPDATE_FAIL = "修改状态失败";
+
+    /**
+     * 用户名不正确
+     */
+    public static final String USERNAME_IS_ERROR = "您输入用户名不正确，请重新输入！";
+
+    /**
+     * 密码不正确
+     */
+    public static final String PASSWORD_IS_ERROR = "您输入密码不正确，请重新输入！";
 }
