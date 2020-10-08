@@ -29,7 +29,7 @@ public class CommonResult<T> {
     /**
      * 成功返回结果
      */
-    public static <T> CommonResult<T> success(T data, String message) {
+    public static <T> CommonResult<T> success(long code, String message, T data) {
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
     }
 

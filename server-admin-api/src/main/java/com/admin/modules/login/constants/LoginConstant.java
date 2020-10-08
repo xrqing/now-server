@@ -21,4 +21,9 @@ public class LoginConstant {
      * 用户名或者密码错误！
      */
     public static final String USERNAME_OR_PASSWORD_IS_ERROR = "用户名或者密码错误！";
+
+    /**
+     * 登录成功
+     */
+    public static final String LOGIN_SUCCESS = "登录成功";
 }
