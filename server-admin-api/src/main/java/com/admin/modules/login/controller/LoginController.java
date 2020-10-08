@@ -2,10 +2,12 @@ package com.admin.modules.login.controller;
 
 import com.admin.modules.admin.constants.AdminConstants;
 import com.admin.modules.admin.mapper.SysAdminMapper;
+import com.admin.modules.login.constants.LoginConstant;
 import com.admin.modules.login.dto.SysAdminLoginDto;
 import com.admin.modules.login.service.LoginService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.common.api.CommonResult;
+import com.common.api.ResultCode;
 import com.entity.pojo.SysAdmin;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +52,6 @@ public class LoginController {
         if (!passwordEncoder.matches(sysAdminLoginDto.getPassword(), exit_sysAdmin.getPassword())) {
             return CommonResult.failed(AdminConstants.PASSWORD_IS_ERROR);
         }
-        return CommonResult.success(loginService.login(sysAdminLoginDto.getUsername(), sysAdminLoginDto.getPassword()));
+        return CommonResult.success(ResultCode.SUCCESS.getCode(), LoginConstant.LOGIN_SUCCESS, loginService.login(sysAdminLoginDto.getUsername(), sysAdminLoginDto.getPassword()));
     }
 }
