@@ -46,12 +46,16 @@ public class LoginController {
     @PostMapping()
     public CommonResult login(@Validated @RequestBody SysAdminLoginDto sysAdminLoginDto) {
         SysAdmin exit_sysAdmin = sysAdminMapper.selectOne(new QueryWrapper<SysAdmin>().eq("username", sysAdminLoginDto.getUsername()));
-        if (exit_sysAdmin == null) {
-            return CommonResult.failed(AdminConstants.USERNAME_IS_ERROR);
+        if (exit_sysAdmin.getStatus() == 1) {
+            if (exit_sysAdmin == null) {
+                return CommonResult.failed(AdminConstants.USERNAME_IS_ERROR);
+            }
+            if (!passwordEncoder.matches(sysAdminLoginDto.getPassword(), exit_sysAdmin.getPassword())) {
+                return CommonResult.failed(AdminConstants.PASSWORD_IS_ERROR);
+            }
+            return CommonResult.success(ResultCode.SUCCESS.getCode(), LoginConstant.LOGIN_SUCCESS, loginService.login(sysAdminLoginDto.getUsername(), sysAdminLoginDto.getPassword()));
+        } else {
+            return CommonResult.failed(LoginConstant.NUMBER_IS_STOP);
         }
-        if (!passwordEncoder.matches(sysAdminLoginDto.getPassword(), exit_sysAdmin.getPassword())) {
-            return CommonResult.failed(AdminConstants.PASSWORD_IS_ERROR);
-        }
-        return CommonResult.success(ResultCode.SUCCESS.getCode(), LoginConstant.LOGIN_SUCCESS, loginService.login(sysAdminLoginDto.getUsername(), sysAdminLoginDto.getPassword()));
     }
 }

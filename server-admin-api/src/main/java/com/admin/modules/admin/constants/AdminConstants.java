@@ -61,4 +61,14 @@ public class AdminConstants {
      * 密码不正确
      */
     public static final String PASSWORD_IS_ERROR = "您输入密码不正确，请重新输入！";
+
+    /**
+     * 获取管理员列表成功
+     */
+    public static final String ADMIN_LIST_SUCCESS = "获取管理员列表成功";
+
+    /**
+     * 获取管理员列表失败
+     */
+    public static final String ADMIN_LIST_FAIL = "获取管理员列表失败";
 }

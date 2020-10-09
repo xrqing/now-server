@@ -1,10 +1,14 @@
 package com.admin.modules.admin.controller;
 
+import com.admin.modules.admin.constants.AdminConstants;
 import com.admin.modules.admin.dto.AddAdminDto;
 import com.admin.modules.admin.dto.EditAdminDto;
 import com.admin.modules.admin.service.SysAdminService;
+import com.admin.modules.admin.vo.SysAdminVo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.api.CommonPage;
 import com.common.api.CommonResult;
+import com.common.api.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +40,11 @@ public class SysAdminController {
     public CommonResult list(@RequestParam(name = "username", required = false) String username,
                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                              @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
-        return CommonResult.success(CommonPage.restPage(sysAdminService.getPageList(pageSize, pageNum, username)));
+        Page<SysAdminVo> list = sysAdminService.getPageList(pageSize, pageNum, username);
+        if (list != null) {
+            return CommonResult.success(ResultCode.SUCCESS.getCode(), AdminConstants.ADMIN_LIST_SUCCESS, CommonPage.restPage(list));
+        }
+        return CommonResult.failed(AdminConstants.ADMIN_LIST_FAIL);
     }
 
     /**

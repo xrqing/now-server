@@ -1,5 +1,6 @@
 package com.admin.modules.admin.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.util.Date;
 
@@ -49,11 +50,13 @@ public class SysAdminVo {
     /**
      * 创建时间
      */
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     /**
      * 最后登陆时间
      */
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date loginTime;
 
     /**

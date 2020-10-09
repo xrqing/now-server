@@ -13,9 +13,9 @@ public class LoginConstant {
     public static final String PASSWORD_IS_ERROR = "密码不正确";
 
     /**
-     * 帐号已被禁用
+     * 您的帐号已被禁用，请联系管理员！
      */
-    public static final String NUMBER_IS_STOP = "帐号已被禁用";
+    public static final String NUMBER_IS_STOP = "您的帐号已被禁用，请联系管理员！";
 
     /**
      * 用户名或者密码错误！
