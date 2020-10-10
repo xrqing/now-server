@@ -1,10 +1,20 @@
 package com.admin.modules.admin.controller;
 
+import com.admin.base.BaseController;
+import com.admin.modules.admin.constants.AdminConstants;
 import com.admin.modules.admin.dto.AddAdminDto;
 import com.admin.modules.admin.dto.EditAdminDto;
+import com.admin.modules.admin.mapper.SysAdminMapper;
 import com.admin.modules.admin.service.SysAdminService;
+import com.admin.modules.admin.vo.SysAdminVo;
+import com.admin.modules.adminRoleRelation.mapper.SysAdminRoleRelationMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.api.CommonPage;
 import com.common.api.CommonResult;
+import com.common.api.ResultCode;
+import com.entity.pojo.SysAdmin;
+import com.entity.pojo.SysAdminRoleRelation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +30,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin")
 @Api(tags = "SysAdminController", description = "管理员管理")
-public class SysAdminController {
+public class SysAdminController extends BaseController {
 
     @Autowired
     private SysAdminService sysAdminService;
+
+    @Autowired
+    private SysAdminMapper sysAdminMapper;
+
+    @Autowired
+    private SysAdminRoleRelationMapper sysAdminRoleRelationMapper;
 
     /**
      * @Description: 根据用户名分页查询管理员
@@ -36,7 +52,11 @@ public class SysAdminController {
     public CommonResult list(@RequestParam(name = "username", required = false) String username,
                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                              @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
-        return CommonResult.success(CommonPage.restPage(sysAdminService.getPageList(pageSize, pageNum, username)));
+        Page<SysAdminVo> list = sysAdminService.getPageList(pageSize, pageNum, username);
+        if (list != null) {
+            return CommonResult.success(ResultCode.SUCCESS.getCode(), AdminConstants.ADMIN_LIST_SUCCESS, CommonPage.restPage(list));
+        }
+        return CommonResult.failed(AdminConstants.ADMIN_LIST_FAIL);
     }
 
     /**
@@ -46,7 +66,14 @@ public class SysAdminController {
     @ApiOperation("新增管理员")
     @PostMapping("/add")
     public CommonResult create(@RequestBody AddAdminDto adminDto) {
-        return CommonResult.success(sysAdminService.create(adminDto));
+        //判断用户名和昵称是否相同
+        if (sysAdminMapper.selectOne(new QueryWrapper<SysAdmin>().eq("username", adminDto.getUsername())) != null) {
+            return CommonResult.failed(AdminConstants.ADD_SYS_ADMIN_IS_EXIST);
+        }
+        if (sysAdminMapper.selectOne(new QueryWrapper<SysAdmin>().eq("nick_name", adminDto.getNickName())) != null) {
+            return CommonResult.failed(AdminConstants.NICKNAME_IS_EXIST);
+        }
+        return CommonResult.success(ResultCode.SUCCESS.getCode(), AdminConstants.ADD_ADMIN_SUCCESS, sysAdminService.create(adminDto));
     }
 
     /**
@@ -79,7 +106,11 @@ public class SysAdminController {
     @PostMapping("/edit/{id}")
     public CommonResult edit(@PathVariable(name = "id", required = true) Integer id,
                              @RequestBody EditAdminDto editAdminDto) {
-        return CommonResult.success(sysAdminService.editSysAdmin(id, editAdminDto));
+        boolean b = sysAdminService.editSysAdmin(id, editAdminDto);
+        if (b == true) {
+            return CommonResult.success(ResultCode.SUCCESS.getCode(), AdminConstants.EDIT_ADMIN_SUCCESS, b);
+        }
+        return CommonResult.failed(AdminConstants.EDIT_ADMIN_FAIL);
     }
 
     /**
@@ -89,7 +120,14 @@ public class SysAdminController {
     @ApiOperation("删除")
     @PostMapping("/delete/{id}")
     public CommonResult delete(@PathVariable(name = "id", required = true) Integer id) {
-        return CommonResult.success(sysAdminService.deleteById(id));
+        SysAdminRoleRelation exit_sysAdminRoleRelation = sysAdminRoleRelationMapper.selectOne(new QueryWrapper<SysAdminRoleRelation>().eq("admin_id", getAdminId()));
+        if (exit_sysAdminRoleRelation != null) {
+            if (exit_sysAdminRoleRelation.getRoleId() == 1) {
+                return CommonResult.success(ResultCode.SUCCESS.getCode(), AdminConstants.DELETE_ADMIN_SUCCESS, sysAdminService.deleteById(id));
+            }
+            return CommonResult.failed(AdminConstants.CJ_ADMIN_NOT);
+        }
+        return CommonResult.failed(AdminConstants.QUAN_XIAN_NOT);
     }
 
     /**
