@@ -48,11 +48,6 @@ public class AdminConstants {
     public static final String NICKNAME_IS_EXIST = "管理员昵称已存在, 请重新输入！";
 
     /**
-     * 修改状态失败
-     */
-    public static final String STATUS_IS_UPDATE_FAIL = "修改状态失败";
-
-    /**
      * 用户名不正确
      */
     public static final String USERNAME_IS_ERROR = "您输入用户名不正确，请重新输入！";
@@ -71,4 +66,44 @@ public class AdminConstants {
      * 获取管理员列表失败
      */
     public static final String ADMIN_LIST_FAIL = "获取管理员列表失败";
+
+    /**
+     * 修改状态成功
+     */
+    public static final String CHANGE_STATUS_SUCCESS = "修改状态成功";
+
+    /**
+     * 修改状态失败,状态值只能为（0-停用， 1-正常）
+     */
+    public static final String CHANGE_STATUS_FAIL = "修改状态失败,状态值只能为（0-停用， 1-正常）";
+
+    /**
+     * 新增管理员成功
+     */
+    public static final String ADD_ADMIN_SUCCESS = "新增管理员成功";
+
+    /**
+     * 编辑管理员成功
+     */
+    public static final String EDIT_ADMIN_SUCCESS = "编辑管理员成功";
+
+    /**
+     * 编辑管理员失败
+     */
+    public static final String EDIT_ADMIN_FAIL = "编辑管理员失败";
+
+    /**
+     * 您不是超级管理员，您无权删除。
+     */
+    public static final String CJ_ADMIN_NOT = "您不是超级管理员，您无权删除。";
+
+    /**
+     * 删除管理员成功
+     */
+    public static final String DELETE_ADMIN_SUCCESS = "删除管理员成功";
+
+    /**
+     * 您暂时未授权，您无权删除。
+     */
+    public static final String QUAN_XIAN_NOT = "您暂时未授权，您无权删除。";
 }

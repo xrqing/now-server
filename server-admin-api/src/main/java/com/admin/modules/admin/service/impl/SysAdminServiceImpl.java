@@ -123,7 +123,7 @@ public class SysAdminServiceImpl implements SysAdminService {
             sysAdmin.setStatus(status);
             int count = sysAdminMapper.updateById(sysAdmin);
             if (count <= 0) {
-                Asserts.fail(AdminConstants.STATUS_IS_UPDATE_FAIL);
+                Asserts.fail(AdminConstants.CHANGE_STATUS_FAIL);
             }
             return true;
         }
@@ -165,10 +165,11 @@ public class SysAdminServiceImpl implements SysAdminService {
     @Override
     public boolean deleteById(Integer id) {
         int count = sysAdminMapper.deleteById(id);
-        if (count <= 0) {
-            return false;
+        if (count > 0) {
+            //解除权限
+            sysAdminRoleRelationMapper.deleteByAdminId(id);
         }
-        return true;
+        return false;
     }
 
     /**
