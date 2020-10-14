@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.modules.rightCategory.mapper.SysRightCategoryMapper">
+    <!--分页获取权限资源分类列表-->
+    <select id="queryList" resultType="com.entity.pojo.SysRightCategory">
+        SELECT
+            src.*
+        FROM
+            sys_right_category src
+        WHERE
+            1 = 1
+        <if test="name != null and name != ''">
+            AND sr.name like concat('%', #{name}, '%')
+        </if>
+        ORDER BY
+            src.create_time DESC
+    </select>
+</mapper>
