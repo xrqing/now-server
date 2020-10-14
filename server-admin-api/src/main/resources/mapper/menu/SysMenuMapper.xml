@@ -8,7 +8,9 @@
 		FROM
 			sys_menu m
 		WHERE
-			parent_id = 0
+			m.parent_id = 0
+		AND
+			m.hidden = 1
 	</select>
 
     <!--查询子菜单列表-->
@@ -19,5 +21,33 @@
 			sys_menu m
 		WHERE
 			m.parent_id = #{id}
+		AND
+			m.hidden = 1
  	</select>
+
+	<!--获取菜单列表-->
+	<select id="selectMenuList" resultType="com.admin.modules.menu.vo.SysMenuVo">
+		SELECT
+			sm.*
+		FROM
+			sys_menu sm
+		WHERE
+		 	sm.parent_id = 0
+		<if test="menuName != null and menuName != ''">
+		AND sm.menu_name like concat('%', #{menuName}, '%')
+		</if>
+		ORDER BY
+			sm.create_time DESC
+	</select>
+
+	<!--菜单下拉选择-->
+	<select id="selectList" resultType="com.admin.modules.menu.vo.MenuSelectVo">
+		SELECT
+			sm.id AS id,
+			sm.menu_name AS menuName
+		FROM
+			sys_menu sm
+		WHERE
+		 	sm.parent_id = 0
+	</select>
 </mapper>

@@ -18,8 +18,8 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("com.admin.modules")
-                .title("后台管理系统")
-                .description("后台管理系统相关接口文档")
+                .title("体育后台管理系统")
+                .description("体育后台管理系统相关接口文档")
                 .contactName("xrq")
                 .version("1.0")
                 .enableSecurity(true)
