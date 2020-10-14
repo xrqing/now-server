@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.modules.right.mapper.SysRightMapper">
+    <!--分页获取权限资源列表-->
+    <select id="queryList" resultType="com.admin.modules.right.vo.SysRightVo">
+        SELECT
+            sr.id AS id,
+            sr.create_time AS createTime,
+            sr.name AS name,
+            sr.url AS url,
+            sr.description AS description,
+            sr.category_id AS categoryId,
+            (
+            SELECT
+                src.name
+            FROM
+                sys_right_category src
+            WHERE
+                src.id IN ( SELECT src.id FROM sys_right_category src WHERE src.id = sr.category_id)
+            ) AS categoryName
+        FROM
+            sys_right sr
+        WHERE
+            1 = 1
+        <if test="name != null and name != ''">
+            AND sr.name like concat('%', #{name}, '%')
+        </if>
+        <if test="url != null and url != ''">
+            AND sr.url = #{url}
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            AND sr.category_id = #{categoryId}
+        </if>
+        ORDER BY
+            sr.create_time DESC
+    </select>
+</mapper>
