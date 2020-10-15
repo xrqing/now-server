@@ -10,7 +10,7 @@
         WHERE
             1 = 1
         <if test="name != null and name != ''">
-            AND sr.name like concat('%', #{name}, '%')
+            AND src.name like concat('%', #{name}, '%')
         </if>
         ORDER BY
             src.create_time DESC

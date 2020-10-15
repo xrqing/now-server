@@ -3,6 +3,8 @@ package com.admin.modules.rightCategory.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.entity.pojo.SysRightCategory;
 
+import java.util.List;
+
 /**
  * @Description: 权限资源分类 service
  * @auther: xrq
@@ -36,4 +38,16 @@ public interface SysRightCategoryService {
      * @param: id
      */
     boolean deleteById(Integer id);
+
+    /**
+     * @Description: 根据id查询详情
+     * @param: id
+     */
+    SysRightCategory getItem(Integer id);
+
+    /**
+     * @Description: 查询全部分类
+     * @param:
+     */
+    List<SysRightCategory> listAll();
 }

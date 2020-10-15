@@ -3,6 +3,7 @@ package com.admin.modules.rightCategory.service.impl;
 import com.admin.base.BaseServiceImpl;
 import com.admin.modules.rightCategory.mapper.SysRightCategoryMapper;
 import com.admin.modules.rightCategory.service.SysRightCategoryService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.entity.pojo.SysRightCategory;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 权限资源分类 serviceImpl
@@ -74,5 +76,23 @@ public class SysRightCategoryServiceImpl extends BaseServiceImpl implements SysR
             return true;
         }
         return false;
+    }
+
+    /**
+     * @Description: 根据id查询详情
+     * @param: id
+     */
+    @Override
+    public SysRightCategory getItem(Integer id) {
+        return sysRightCategoryMapper.selectById(id);
+    }
+
+    /**
+     * @Description: 查询全部分类
+     * @param:
+     */
+    @Override
+    public List<SysRightCategory> listAll() {
+        return sysRightCategoryMapper.selectList(new QueryWrapper<SysRightCategory>());
     }
 }

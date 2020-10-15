@@ -13,6 +13,7 @@ import com.common.api.CommonResult;
 import com.common.api.ResultCode;
 import com.entity.pojo.SysAdminRoleRelation;
 import com.entity.pojo.SysRightCategory;
+import io.netty.util.collection.CharObjectMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -111,5 +112,25 @@ public class SysRightCategoryController extends BaseController {
             return CommonResult.failed(AdminConstants.CJ_ADMIN_NOT);
         }
         return CommonResult.failed(AdminConstants.QUAN_XIAN_NOT);
+    }
+
+    /**
+     * @Description: 根据id查询详情
+     * @param: id
+     */
+    @ApiOperation("根据id查询详情")
+    @GetMapping("/{id}")
+    public CommonResult getItem(@PathVariable(name = "id", required = true) Integer id) {
+        return CommonResult.success(sysRightCategoryService.getItem(id));
+    }
+
+    /**
+     * @Description: 查询全部分类
+     * @param:
+     */
+    @ApiOperation("查询全部分类")
+    @GetMapping("/listAll")
+    public CommonResult listAll() {
+        return CommonResult.success(sysRightCategoryService.listAll());
     }
 }
